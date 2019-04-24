@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-class ReceiptLoadTest extends Simulation {
+class ReceiptLoadTest(val constantUsersPerSecond: Double, val durationInMinutes: Double) extends Simulation {
 
   val httpProtocol = http
     .baseUrl("http://193.196.52.68") // Here is the root for all relative URLs
@@ -31,6 +31,6 @@ class ReceiptLoadTest extends Simulation {
 
 
   setUp(scn.inject(
-    constantUsersPerSec(100) during(1 minute)
+    constantUsersPerSec(constantUsersPerSecond) during(durationInMinutes minute)
   ).protocols(httpProtocol))
 }
